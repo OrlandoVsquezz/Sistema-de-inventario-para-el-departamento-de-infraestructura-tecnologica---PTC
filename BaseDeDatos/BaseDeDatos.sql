@@ -29,10 +29,6 @@ nombreCategoria varchar (70),
 descripcionCategoria varchar (300));
 go
 
-create table NombreMaterial (
-idNombreMaterial int identity (1,1) primary key,
-nombreMaterial varchar (100) not null);
-go
 
 create table Marca (
 idMarca int identity (1,1) primary key,
@@ -41,14 +37,13 @@ go
 
 create table Material (
 idMaterial int identity (1,1) primary key,
+nombreMaterial varchar (100) not null,
 cantidad int not null,
 fechaIngreso date,
 descripcionMaterial varchar (500),
 modelo varchar (100) unique,
-id_NombreMaterial int,
 id_Categoria int,
 id_Marca int,
-constraint fk_NomMaterial Foreign key (id_NombreMaterial) references NombreMaterial(idNombreMaterial),
 constraint fk_Categoria Foreign key(id_Categoria) references Categoria(idCategoria),
 constraint fk_Marca Foreign key(id_Marca) references Marca(idMarca));
 go
@@ -85,21 +80,21 @@ insert into Rol values ('Jefatura', 'Este rol tiene acceso al inventario, consum
 ('Departamento IT', 'Este rol tiene acceso al inventario, consumo y a la realizacion de solicitudes');
 
 insert into Material 
-values (10, '2021-03-15', 'Laptop de alto rendimiento para oficina', 'LAP-001', 10, 1, 1),
-(25, '2022-07-22', 'Teclado inalámbrico compacto', 'TECL-002', 3, 2, 7),
-(5,  '2023-01-08', 'Aire comprimido para limpieza de computadoras', 'AIRE-003', 4, 3, 9),
-(20, '2020-11-30', 'Router inalámbrico de alto rendimiento', 'ROUT-004', 5, 4, 3),
-(12, '2024-05-10', 'Impresora multifuncional con sistema de tinta continua', 'IMPR-005', 6, 1, 10),
-(15, '2023-09-05', 'Botellas de tinta negra para impresora EcoTank', 'TINTA-006', 6, 1, 10),
-(18, '2022-02-12', 'Switch de red 5 puertos Gigabit', 'SWITCH-007', 7, 4, 6),
-(30, '2024-12-01', 'Memoria USB 64GB', 'USB-008', 12, 5, 7),
-(50, '2021-08-19', 'Cinta adhesiva transparente de oficina', 'CINTA-009', 8, 6, 8),
-(7,  '2023-06-14', 'Proyector portátil para presentaciones', 'PROY-010', 2, 1, 7),
-(40, '2020-02-20', 'Paquete de hojas tamaño carta', 'PAPEL-011', 1, 6, 5),
-(9,  '2022-04-25', 'Limpiador multiusos para superficies electrónicas', 'LIMP-012', 11, 3, 11),
-(5,  '2023-11-30', 'Disco duro externo de 2TB USB 3.0', 'DD-013', 13, 5, 2),
-(16, '2024-03-05', 'Cámara de seguridad IP para interiores', 'CAM-014', 9, 4, 3),
-(8,  '2021-06-18', 'Computadora de escritorio básica', 'PC-015', 1, 1, 1); 
+values ('Laptop Ryzen 7', 10, '2021-03-15', 'Laptop de alto rendimiento para oficina', 'LAP-001', 1, 1),
+('Monitor Hp', 25, '2022-07-22', 'Teclado inalámbrico compacto', 'TECL-002',  2, 7),
+('Teclado alambrico', 5,  '2023-01-08', 'Aire comprimido para limpieza de computadoras', 'AIRE-003',3, 9),
+('Aire comprimido', 20, '2020-11-30', 'Router inalámbrico de alto rendimiento', 'ROUT-004',  4, 3),
+('Router 1200Mbps', 12, '2024-05-10', 'Impresora multifuncional con sistema de tinta continua', 'IMPR-005',  1, 10),
+('Tinta negra para impresora', 15, '2023-09-05', 'Botellas de tinta negra para impresora EcoTank', 'TINTA-006',  1, 10),
+('Switch RB260GS', 18, '2022-02-12', 'Switch de red 5 puertos Gigabit', 'SWITCH-007', 4, 6),
+('Cinta Scotch', 30, '2024-12-01', 'Memoria USB 64GB', 'USB-008',  5, 7),
+('Cámara IP NXT-CAM', 50, '2021-08-19', 'Cinta adhesiva transparente de oficina', 'CINTA-009',  6, 8),
+('Laptop core i5', 7,  '2023-06-14', 'Proyector portátil para presentaciones', 'PROY-010',  1, 7),
+('Limpiador en spray', 40, '2020-02-20', 'Paquete de hojas tamaño carta', 'PAPEL-011', 6, 5),
+('USB 1TB', 9,  '2022-04-25', 'Limpiador multiusos para superficies electrónicas', 'LIMP-012',  3, 11),
+('Disco duro externo de 2TB', 5,  '2023-11-30', 'Disco duro externo de 2TB USB 3.0', 'DD-013',  5, 2),
+('Cable RJ45', 16, '2024-03-05', 'Cámara de seguridad IP para interiores', 'CAM-014', 4, 3),
+('Plumones Artline', 8,  '2021-06-18', 'Computadora de escritorio básica', 'PC-015', 1, 1); 
 
 insert into Marca 
 values ('Ardone'),
@@ -117,23 +112,6 @@ values ('Ardone'),
 ('Logitech'),
 ('Canon'),
 ('Bic')
-
-insert into NombreMaterial
-values ('Laptop Ryzen 7'),
-('Monitor Hp'),
-('Teclado alambrico'),
-('Aire comprimido'),
-('Router 1200Mbps'),
-('Tinta negra para impresora'),
-('Switch RB260GS'),
-('Cinta Scotch'),
-('Cámara IP NXT-CAM'),
-('Laptop core i5'),
-('Limpiador en spray'),
-('USB 1TB'),
-('Disco duro externo de 2TB'),
-('Cable RJ45'),
-('Plumones Artline')
 
 insert into Categoria 
 values ('Computación','objetos de computacion'),
@@ -182,11 +160,13 @@ Select *from Usuario
 Select *from Rol
 Select *from Categoria
 Select *from Solicitud
-Select *from NombreMaterial
 Select *from Marca
 Select *from Material
 Select *from HistorialSolicitud
 go
+
+
+--Creacion de consultas para el sistema en c#
 
 
 

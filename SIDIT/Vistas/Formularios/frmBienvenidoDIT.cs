@@ -30,5 +30,35 @@ namespace Vistas.Formularios
             frmMenuDIT menuDIT = new frmMenuDIT();
             menuDIT.Show();
         }
+
+        private void pbVerSolicitudes_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            frmMenuDIT menuDIT = new frmMenuDIT();
+            menuDIT.Show();
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            frmMenuDIT menuDIT = new frmMenuDIT();
+            menuDIT.Show();
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            frmMenuDIT menuDIT = new frmMenuDIT();
+            menuDIT.Show();
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            frmMenuDIT menuDIT = new frmMenuDIT();
+            menuDIT.Show();
+        }
+
+
     }
 }

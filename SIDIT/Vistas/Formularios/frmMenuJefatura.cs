@@ -17,5 +17,19 @@ namespace Vistas.Formularios
             InitializeComponent();
         }
 
+        public void MostrarFormInvEnPanel()
+        {
+            pnlContenedor.Controls.Clear();
+            frmInventarioJefatura invenJefatura = new frmInventarioJefatura();
+            invenJefatura.TopLevel = false;
+            invenJefatura.FormBorderStyle = FormBorderStyle.None;
+            invenJefatura.Dock = DockStyle.Fill;
+            invenJefatura.Controls.Add(invenJefatura);
+            invenJefatura.Show();
+
+            //Cambiar colores de panel activo 
+
+            //Restauracion de colores para paneles inactivos
+        }
     }
 }
